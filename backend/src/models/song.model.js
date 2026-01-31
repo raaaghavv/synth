@@ -14,14 +14,14 @@ const songSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    coverUrl: {
+    coverImage: {
       type: String,
     },
     duration: {
       type: Number,
       required: true,
     },
-    audioPath: {
+    audioFile: {
       type: String,
       required: true,
     },
