@@ -50,3 +50,15 @@ export const uploadSong = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(200, createdSong, "Song uploaded successfully"));
 });
+
+export const getAllSongs = asyncHandler(async (req, res) => {
+  const songs = await Song.find().select("-audioFile -__v");
+
+  if (songs.length === 0) {
+    throw new ApiError(404, "No songs found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, songs, "Songs fetched successfully"));
+});
