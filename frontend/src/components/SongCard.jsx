@@ -10,9 +10,9 @@ export default function SongCard({ song, onPlay = () => {} }) {
     >
       {/* Album Art */}
       <div className="relative aspect-square mb-4 rounded-md overflow-hidden bg-[var(--background-highlight)]">
-        {song.coverUrl ? (
+        {song.coverImage ? (
           <img
-            src={song.coverUrl}
+            src={`${process.env.NEXT_PUBLIC_API_URL}/${song.coverImage}`}
             alt={song.title}
             className="w-full h-full object-cover"
           />
