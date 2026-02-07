@@ -13,6 +13,29 @@ This project demonstrates:
 5. **Persistent Background Playback** - Media continues playing while navigating between pages
 6. **Keyboard Controls** - keyboard support (spacebar, arrow keys)
 
+## 🎮 Features
+
+| Feature             | Description                              |
+| ------------------- | ---------------------------------------- |
+| **Stream Audio**    | HTTP 206 partial content for audio files |
+| **Stream Video**    | HTTP 206 partial content for video files |
+| **Play/Pause**      | Click video or use spacebar              |
+| **Seek**            | Arrow Left/Right to skip 5 seconds       |
+| **Volume**          | Arrow Up/Down to adjust volume           |
+| **Shuffle/Repeat**  | Queue management controls                |
+| **Fullscreen**      | Native fullscreen support                |
+| **Mini PiP**        | Custom floating video player             |
+| **Background Play** | Persistent playback across navigation    |
+
+## 📡 API Endpoints
+
+| Method | Endpoint                              | Description        |
+| ------ | ------------------------------------- | ------------------ |
+| `GET`  | `/api/v1/songs`                       | List all songs     |
+| `POST` | `/api/v1/songs/upload`                | Upload new song    |
+| `GET`  | `/api/v1/songs/:id/stream?type=audio` | Stream audio (206) |
+| `GET`  | `/api/v1/songs/:id/stream?type=video` | Stream video (206) |
+
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -48,27 +71,5 @@ synth/
     │   ├── models/
     │   └── middlewares/
     └── uploads/       # Local Media storage for simulating streaming response
+
 ```
-
-## 🎮 Features
-
-| Feature             | Description                              |
-| ------------------- | ---------------------------------------- |
-| **Stream Audio**    | HTTP 206 partial content for audio files |
-| **Stream Video**    | HTTP 206 partial content for video files |
-| **Play/Pause**      | Click video or use spacebar              |
-| **Seek**            | Arrow Left/Right to skip 5 seconds       |
-| **Volume**          | Arrow Up/Down to adjust volume           |
-| **Shuffle/Repeat**  | Queue management controls                |
-| **Fullscreen**      | Native fullscreen support                |
-| **Mini PiP**        | Custom floating video player             |
-| **Background Play** | Persistent playback across navigation    |
-
-## 📡 API Endpoints
-
-| Method | Endpoint                              | Description        |
-| ------ | ------------------------------------- | ------------------ |
-| `GET`  | `/api/v1/songs`                       | List all songs     |
-| `POST` | `/api/v1/songs/upload`                | Upload new song    |
-| `GET`  | `/api/v1/songs/:id/stream?type=audio` | Stream audio (206) |
-| `GET`  | `/api/v1/songs/:id/stream?type=video` | Stream video (206) |
