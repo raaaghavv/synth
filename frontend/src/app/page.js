@@ -1,12 +1,27 @@
 "use client";
 
-import { mockSongs } from "@/lib/mockData";
 import SongCard from "@/components/SongCard";
+import { useQuery } from "@tanstack/react-query";
+import { usePlayer } from "@/context/PlayerContext";
 
 export default function Home() {
+  const { playSong } = usePlayer();
+
+  const { data: songsResponse } = useQuery({
+    queryKey: ["songs"],
+    queryFn: async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/songs`,
+      );
+      return res.json();
+    },
+  });
+
+  const songs = songsResponse?.data || [];
+
   const handlePlay = (song) => {
-    console.log("Playing:", song.title);
-    // TODO: Connect to backend / player state
+    // Play the song and set the full list as the queue
+    playSong(song, songs);
   };
 
   return (
@@ -17,7 +32,7 @@ export default function Home() {
 
         {/* Quick picks grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {mockSongs.slice(0, 6).map((song) => (
+          {songs?.slice(0, 6).map((song) => (
             <button
               key={song.id}
               onClick={() => handlePlay(song)}
@@ -50,7 +65,7 @@ export default function Home() {
           </button>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-          {mockSongs.map((song) => (
+          {songs?.map((song) => (
             <SongCard key={song.id} song={song} onPlay={handlePlay} />
           ))}
         </div>
@@ -65,7 +80,7 @@ export default function Home() {
           </button>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
-          {[...mockSongs].reverse().map((song) => (
+          {songs?.map((song) => (
             <SongCard key={`made-${song.id}`} song={song} onPlay={handlePlay} />
           ))}
         </div>
