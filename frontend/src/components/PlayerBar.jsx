@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Play,
@@ -58,18 +59,19 @@ export default function PlayerBar() {
   };
 
   return (
-    <footer className="h-20 bg-black border-t border-[var(--background-highlight)] flex items-center px-4">
+    <footer className="h-20 bg-black border-t border-background-highlight flex items-center px-4">
       {/* Left - Song Info */}
       <div className="w-72 flex items-center gap-3">
         {currentSong ? (
           <>
             {/* Album art */}
-            <div className="w-14 h-14 rounded bg-[var(--background-highlight)] flex-shrink-0">
+            <div className="w-14 h-14 rounded bg-background-highlight shrink-0 relative overflow-hidden">
               {coverUrl && (
-                <img
+                <Image
                   src={coverUrl}
                   alt={currentSong.title}
-                  className="w-full h-full object-cover rounded"
+                  fill
+                  className="object-cover rounded"
                 />
               )}
             </div>
@@ -80,15 +82,13 @@ export default function PlayerBar() {
               >
                 {currentSong.title}
               </Link>
-              <p className="text-xs text-[var(--foreground-muted)] truncate">
+              <p className="text-xs text-foreground-muted truncate">
                 {currentSong.artist}
               </p>
             </div>
           </>
         ) : (
-          <div className="text-sm text-[var(--foreground-muted)]">
-            No song playing
-          </div>
+          <div className="text-sm text-foreground-muted">No song playing</div>
         )}
       </div>
 
@@ -99,16 +99,14 @@ export default function PlayerBar() {
           <button
             onClick={toggleShuffle}
             className={`transition-colors ${
-              shuffle
-                ? "text-[var(--accent)]"
-                : "text-[var(--foreground-muted)] hover:text-white"
+              shuffle ? "text-accent" : "text-foreground-muted hover:text-white"
             }`}
           >
             <Shuffle size={18} />
           </button>
           <button
             onClick={playPrevious}
-            className="text-[var(--foreground-muted)] hover:text-white transition-colors"
+            className="text-foreground-muted hover:text-white transition-colors"
           >
             <SkipBack size={22} fill="currentColor" />
           </button>
@@ -124,16 +122,14 @@ export default function PlayerBar() {
           </button>
           <button
             onClick={playNext}
-            className="text-[var(--foreground-muted)] hover:text-white transition-colors"
+            className="text-foreground-muted hover:text-white transition-colors"
           >
             <SkipForward size={22} fill="currentColor" />
           </button>
           <button
             onClick={toggleRepeat}
             className={`transition-colors ${
-              repeat
-                ? "text-[var(--accent)]"
-                : "text-[var(--foreground-muted)] hover:text-white"
+              repeat ? "text-accent" : "text-foreground-muted hover:text-white"
             }`}
           >
             <Repeat size={18} />
@@ -142,7 +138,7 @@ export default function PlayerBar() {
 
         {/* Progress Bar */}
         <div className="w-full flex items-center gap-2">
-          <span className="text-xs text-[var(--foreground-muted)] w-10 text-right">
+          <span className="text-xs text-foreground-muted w-10 text-right">
             {formatDuration(currentTime)}
           </span>
           <input
@@ -151,12 +147,12 @@ export default function PlayerBar() {
             max="100"
             value={progress}
             onChange={(e) => seekTo(Number(e.target.value))}
-            className="flex-1 h-1 accent-[var(--accent)]"
+            className="flex-1 h-1 accent-accent"
             style={{
               background: `linear-gradient(to right, var(--accent) ${progress}%, #535353 ${progress}%)`,
             }}
           />
-          <span className="text-xs text-[var(--foreground-muted)] w-10">
+          <span className="text-xs text-foreground-muted w-10">
             {formatDuration(duration)}
           </span>
         </div>
@@ -166,7 +162,7 @@ export default function PlayerBar() {
       <div className="w-72 flex items-center justify-end gap-3">
         <button
           onClick={toggleMute}
-          className="text-[var(--foreground-muted)] hover:text-white transition-colors"
+          className="text-foreground-muted hover:text-white transition-colors"
         >
           {isMuted || volume === 0 ? (
             <VolumeX size={18} />
@@ -182,14 +178,14 @@ export default function PlayerBar() {
           max="100"
           value={volume}
           onChange={(e) => changeVolume(Number(e.target.value))}
-          className="w-24 h-1 accent-[var(--accent)]"
+          className="w-24 h-1 accent-accent"
           style={{
             background: `linear-gradient(to right, var(--foreground) ${volume}%, #535353 ${volume}%)`,
           }}
         />
         <button
           onClick={handleTogglePlayer}
-          className="text-[var(--foreground-muted)] hover:text-white transition-colors ml-2"
+          className="text-foreground-muted hover:text-white transition-colors ml-2"
         >
           {isPlayerPage ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
         </button>

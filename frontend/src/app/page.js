@@ -36,12 +36,12 @@ export default function Home() {
             <button
               key={song.id}
               onClick={() => handlePlay(song)}
-              className="flex items-center gap-4 bg-[var(--background-elevated)] hover:bg-[var(--background-highlight)] rounded-md overflow-hidden transition-colors group"
+              className="flex items-center gap-4 bg-background-elevated hover:bg-background-highlight rounded-md overflow-hidden transition-colors group"
             >
               {/* Album art placeholder */}
-              <div className="w-16 h-16 bg-[var(--background-highlight)] flex-shrink-0 flex items-center justify-center">
+              <div className="w-16 h-16 bg-background-highlight shrink-0 flex items-center justify-center">
                 <svg
-                  className="w-6 h-6 text-[var(--foreground-muted)]"
+                  className="w-6 h-6 text-foreground-muted"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -60,7 +60,7 @@ export default function Home() {
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-white">Recently played</h2>
-          <button className="text-sm font-semibold text-[var(--foreground-muted)] hover:underline">
+          <button className="text-sm font-semibold text-foreground-muted hover:underline">
             Show all
           </button>
         </div>
@@ -75,7 +75,7 @@ export default function Home() {
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-white">Made for you</h2>
-          <button className="text-sm font-semibold text-[var(--foreground-muted)] hover:underline">
+          <button className="text-sm font-semibold text-foreground-muted hover:underline">
             Show all
           </button>
         </div>

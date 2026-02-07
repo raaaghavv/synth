@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   ChevronDown,
   MoreHorizontal,
@@ -100,7 +101,7 @@ export default function PlayerPage() {
   };
 
   return (
-    <div className="min-h-full flex flex-col bg-gradient-to-b from-[#3d3d3d] to-[#121212] -m-6">
+    <div className="min-h-full flex flex-col bg-linear-to-b from-[#3d3d3d] to-[#121212] -m-6">
       {/* Header */}
       <div className="flex items-center justify-between p-4">
         <button
@@ -145,12 +146,13 @@ export default function PlayerPage() {
         {viewMode === "song" ? (
           <>
             {/* Album Art */}
-            <div className="w-full max-w-[450px] aspect-square rounded-lg bg-background-highlight shadow-2xl flex items-center justify-center overflow-hidden">
+            <div className="relative w-full max-w-[450px] aspect-square rounded-lg bg-background-highlight shadow-2xl flex items-center justify-center overflow-hidden">
               {coverUrl ? (
-                <img
+                <Image
                   src={coverUrl}
-                  alt={currentSong?.title}
-                  className="w-full h-full object-cover"
+                  alt={currentSong?.title || "Album cover"}
+                  fill
+                  className="object-cover"
                 />
               ) : (
                 <svg

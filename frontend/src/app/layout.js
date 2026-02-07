@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             {/* Main area: Sidebar + Content */}
             <div className="flex flex-1 min-h-0">
               <Sidebar />
-              <main className="flex-1 overflow-y-auto bg-gradient-to-b from-[#1e1e1e] to-[var(--background)] p-6">
+              <main className="flex-1 overflow-y-auto bg-linear-to-b from-[#1e1e1e] to-background p-6">
                 {children}
               </main>
             </div>

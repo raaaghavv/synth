@@ -16,7 +16,7 @@ export default function Sidebar() {
       <nav className="px-3">
         <Link
           href="/"
-          className="flex items-center gap-4 px-3 py-2 text-[var(--foreground-muted)] hover:text-white transition-colors rounded-md"
+          className="flex items-center gap-4 px-3 py-2 text-foreground-muted hover:text-white transition-colors rounded-md"
         >
           <Home size={24} />
           <span className="font-semibold">Home</span>
@@ -27,11 +27,11 @@ export default function Sidebar() {
       <div className="mt-6 flex-1 flex flex-col min-h-0">
         <div className="px-3 mb-2">
           <div className="flex items-center justify-between px-3 py-2">
-            <div className="flex items-center gap-3 text-[var(--foreground-muted)] hover:text-white transition-colors cursor-pointer">
+            <div className="flex items-center gap-3 text-foreground-muted hover:text-white transition-colors cursor-pointer">
               <Library size={24} />
               <span className="font-semibold">Your Library</span>
             </div>
-            <button className="text-[var(--foreground-muted)] hover:text-white transition-colors p-1 rounded-full hover:bg-[var(--background-highlight)]">
+            <button className="text-foreground-muted hover:text-white transition-colors p-1 rounded-full hover:bg-background-highlight">
               <Plus size={20} />
             </button>
           </div>
@@ -43,18 +43,15 @@ export default function Sidebar() {
             {mockPlaylists.map((playlist) => (
               <button
                 key={playlist.id}
-                className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-[var(--background-highlight)] transition-colors text-left"
+                className="w-full flex items-center gap-3 p-2 rounded-md hover:bg-background-highlight transition-colors text-left"
               >
                 {/* Playlist thumbnail placeholder */}
-                <div className="w-12 h-12 rounded bg-[var(--background-highlight)] flex items-center justify-center">
-                  <Library
-                    size={20}
-                    className="text-[var(--foreground-muted)]"
-                  />
+                <div className="w-12 h-12 rounded bg-background-highlight flex items-center justify-center">
+                  <Library size={20} className="text-foreground-muted" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm text-white truncate">{playlist.name}</p>
-                  <p className="text-xs text-[var(--foreground-muted)]">
+                  <p className="text-xs text-foreground-muted">
                     Playlist • {playlist.songCount} songs
                   </p>
                 </div>
