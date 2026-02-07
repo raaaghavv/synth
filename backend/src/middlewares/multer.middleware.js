@@ -9,6 +9,8 @@ const storage = multer.diskStorage({
       uploadPath = "./uploads/audio";
     } else if (file.fieldname === "coverImage") {
       uploadPath = "./uploads/images";
+    } else if (file.fieldname === "videoFile") {
+      uploadPath = "./uploads/video";
     }
 
     // Create directory if it doesn't exist

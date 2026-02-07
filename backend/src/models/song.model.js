@@ -21,12 +21,29 @@ const songSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    hasVideo: {
+      type: Boolean,
+      default: false,
+    },
     audioFile: {
       type: String,
       required: true,
     },
+    videoFile: {
+      type: String,
+    },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: (doc, ret) => {
+        ret.id = ret._id;
+        delete ret._id;
+        return ret;
+      },
+    },
+  }
 );
 
 export const Song = mongoose.model("song", songSchema);
