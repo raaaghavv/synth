@@ -12,6 +12,9 @@ const geistSans = Geist({
 export const metadata = {
   title: "Synth - Music Player",
   description: "A minimal music streaming experience",
+  icons: {
+    icon: "/synthicon.png",
+  },
 };
 
 export default function RootLayout({ children }) {
