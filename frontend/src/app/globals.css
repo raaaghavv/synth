@@ -50,13 +50,14 @@ body {
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  background: transparent;
   cursor: pointer;
+  height: 4px;
+  border-radius: 2px;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
   height: 4px;
-  background: #535353;
+  background: inherit;
   border-radius: 2px;
 }
 
@@ -69,7 +70,8 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   margin-top: -4px;
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.15s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 input[type="range"]:hover::-webkit-slider-thumb {
@@ -78,7 +80,7 @@ input[type="range"]:hover::-webkit-slider-thumb {
 
 input[type="range"]::-moz-range-track {
   height: 4px;
-  background: #535353;
+  background: inherit;
   border-radius: 2px;
 }
 
@@ -88,4 +90,36 @@ input[type="range"]::-moz-range-thumb {
   background: #fff;
   border-radius: 50%;
   border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Firefox - show filled portion using range-progress */
+input[type="range"]::-moz-range-progress {
+  background: var(--accent);
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* Play/Pause Icon Scale + Fade Animation */
+@keyframes scale-fade {
+  0% {
+    opacity: 1;
+    transform: scale(0.5);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-fade {
+  animation: scale-fade 1.7s ease-out forwards;
 }
