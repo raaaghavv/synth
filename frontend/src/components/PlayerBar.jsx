@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
   Play,
   Pause,
@@ -9,25 +10,52 @@ import {
   Shuffle,
   Repeat,
   Volume2,
+  Volume1,
+  VolumeX,
   Maximize2,
+  Minimize2,
 } from "lucide-react";
 import { formatDuration } from "@/lib/mockData";
+import { usePlayer } from "@/context/PlayerContext";
 
-export default function PlayerBar({
-  currentSong = null,
-  isPlaying = false,
-  progress = 0, // 0-100
-  duration = 0, // seconds
-  volume = 80, // 0-100
-  onPlayPause = () => {},
-  onNext = () => {},
-  onPrevious = () => {},
-  onSeek = () => {},
-  onVolumeChange = () => {},
-  onShuffle = () => {},
-  onRepeat = () => {},
-}) {
+export default function PlayerBar() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const isPlayerPage = pathname === "/player";
+
+  const {
+    currentSong,
+    isPlaying,
+    progress,
+    duration,
+    volume,
+    isMuted,
+    shuffle,
+    repeat,
+    togglePlay,
+    playNext,
+    playPrevious,
+    seekTo,
+    changeVolume,
+    toggleMute,
+    toggleShuffle,
+    toggleRepeat,
+  } = usePlayer();
+
   const currentTime = (progress / 100) * duration;
+
+  // Build cover URL if song has cover image
+  const coverUrl = currentSong?.coverImage
+    ? `${process.env.NEXT_PUBLIC_API_URL}/${currentSong.coverImage}`
+    : null;
+
+  const handleTogglePlayer = () => {
+    if (isPlayerPage) {
+      router.back();
+    } else {
+      router.push("/player");
+    }
+  };
 
   return (
     <footer className="h-20 bg-black border-t border-[var(--background-highlight)] flex items-center px-4">
@@ -35,11 +63,11 @@ export default function PlayerBar({
       <div className="w-72 flex items-center gap-3">
         {currentSong ? (
           <>
-            {/* Album art placeholder */}
+            {/* Album art */}
             <div className="w-14 h-14 rounded bg-[var(--background-highlight)] flex-shrink-0">
-              {currentSong.coverUrl && (
+              {coverUrl && (
                 <img
-                  src={currentSong.coverUrl}
+                  src={coverUrl}
                   alt={currentSong.title}
                   className="w-full h-full object-cover rounded"
                 />
@@ -69,19 +97,23 @@ export default function PlayerBar({
         {/* Control Buttons */}
         <div className="flex items-center gap-4 mb-2">
           <button
-            onClick={onShuffle}
-            className="text-[var(--foreground-muted)] hover:text-white transition-colors"
+            onClick={toggleShuffle}
+            className={`transition-colors ${
+              shuffle
+                ? "text-[var(--accent)]"
+                : "text-[var(--foreground-muted)] hover:text-white"
+            }`}
           >
             <Shuffle size={18} />
           </button>
           <button
-            onClick={onPrevious}
+            onClick={playPrevious}
             className="text-[var(--foreground-muted)] hover:text-white transition-colors"
           >
             <SkipBack size={22} fill="currentColor" />
           </button>
           <button
-            onClick={onPlayPause}
+            onClick={togglePlay}
             className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:scale-105 transition-transform"
           >
             {isPlaying ? (
@@ -91,14 +123,18 @@ export default function PlayerBar({
             )}
           </button>
           <button
-            onClick={onNext}
+            onClick={playNext}
             className="text-[var(--foreground-muted)] hover:text-white transition-colors"
           >
             <SkipForward size={22} fill="currentColor" />
           </button>
           <button
-            onClick={onRepeat}
-            className="text-[var(--foreground-muted)] hover:text-white transition-colors"
+            onClick={toggleRepeat}
+            className={`transition-colors ${
+              repeat
+                ? "text-[var(--accent)]"
+                : "text-[var(--foreground-muted)] hover:text-white"
+            }`}
           >
             <Repeat size={18} />
           </button>
@@ -114,7 +150,7 @@ export default function PlayerBar({
             min="0"
             max="100"
             value={progress}
-            onChange={(e) => onSeek(Number(e.target.value))}
+            onChange={(e) => seekTo(Number(e.target.value))}
             className="flex-1 h-1 accent-[var(--accent)]"
             style={{
               background: `linear-gradient(to right, var(--accent) ${progress}%, #535353 ${progress}%)`,
@@ -128,24 +164,35 @@ export default function PlayerBar({
 
       {/* Right - Volume & Extra Controls */}
       <div className="w-72 flex items-center justify-end gap-3">
-        <Volume2 size={18} className="text-[var(--foreground-muted)]" />
+        <button
+          onClick={toggleMute}
+          className="text-[var(--foreground-muted)] hover:text-white transition-colors"
+        >
+          {isMuted || volume === 0 ? (
+            <VolumeX size={18} />
+          ) : volume < 50 ? (
+            <Volume1 size={18} />
+          ) : (
+            <Volume2 size={18} />
+          )}
+        </button>
         <input
           type="range"
           min="0"
           max="100"
           value={volume}
-          onChange={(e) => onVolumeChange(Number(e.target.value))}
+          onChange={(e) => changeVolume(Number(e.target.value))}
           className="w-24 h-1 accent-[var(--accent)]"
           style={{
             background: `linear-gradient(to right, var(--foreground) ${volume}%, #535353 ${volume}%)`,
           }}
         />
-        <Link
-          href="/player"
+        <button
+          onClick={handleTogglePlayer}
           className="text-[var(--foreground-muted)] hover:text-white transition-colors ml-2"
         >
-          <Maximize2 size={16} />
-        </Link>
+          {isPlayerPage ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+        </button>
       </div>
     </footer>
   );
