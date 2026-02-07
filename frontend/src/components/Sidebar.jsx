@@ -21,13 +21,6 @@ export default function Sidebar() {
           <Home size={24} />
           <span className="font-semibold">Home</span>
         </Link>
-        <Link
-          href="/search"
-          className="flex items-center gap-4 px-3 py-2 text-[var(--foreground-muted)] hover:text-white transition-colors rounded-md"
-        >
-          <Search size={24} />
-          <span className="font-semibold">Search</span>
-        </Link>
       </nav>
 
       {/* Library Section */}
